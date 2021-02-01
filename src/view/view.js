@@ -1,9 +1,9 @@
 import { createBoardBtn, boardInstance } from "./interfaceinstances/board.js";
 import { createList, listInstance, listEl, addListElBtn } from "./interfaceinstances/list.js"
 import { inputModal } from "./interfaceinstances/inputModal.js";
-import { boardInputModal } from "./interfaceinstances/boardinputModal.js";
 import { editListItemModal } from "./interfaceinstances/editListItemModal.js";
 import { listInputModal } from "./interfaceinstances/listInputModal.js";
+import { boardInputModal } from "./interfaceinstances/boardInputModal.js";
 import listElDrag from "../utils/drag.js";
 
 export default class View {
