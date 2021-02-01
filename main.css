@@ -1,0 +1,47 @@
+@import './src/style/board.css';
+@import './src/style/list.css';
+@import './src/style/modals.css';
+
+/*
+* Style reset
+*/
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  color: #C8D3F1;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 0;
+  background: #2C2F33;
+}
+
+input, textarea, button {
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+/*
+* Initial interface style
+*/
+
+.wrapper {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 10px;
+}
+
+
+
+
+
+
+

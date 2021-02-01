@@ -1,0 +1,57 @@
+Trello Requirements:
+	1. Create a board
+	2. Delete a Board
+	3. Add a card
+	4. Delete a card
+	5. List cards
+	6. List items for each card
+	7. Add items to a card
+	8. Show item details
+	9. Delete an item
+	10. Enable drag & drop of cards
+	11. Enable drag & drop of items between the cards
+
+Flow:
+	1. Initialize interface with "create board" button
+	2. create board with "create list" button
+	3. Input list title into modal then "create/discard"
+	3.1. create list instance with title and "add item" button
+	4. Input item title into modal
+	4.1 create list item with onclick event
+	5. list item editable / deletable
+
+	Utils:
+		1. load from local storage
+		2. drag&drop items
+
+Archiceture:
+	Folder structure:
+		index.html
+		main.js //controller
+		main.css
+		src: [
+			model: [
+				model.js
+			]
+			utils: [
+				storage.js
+				drag.js
+			]
+			view: [
+				view.js
+				interfaceinstances: [
+					board.js
+					list.js
+					editModal.js
+					inputModal.js
+					...
+				]
+			]
+		]
+
+	Application structure:
+		see: Trello clone.pdf
+
+Architectural Design Pattern:
+	The application follows MVC architectural design pattern
+	
