@@ -7,6 +7,7 @@ export const listInstance = (data, parent, child) => {
     var cont = document.createElement('div');
     cont.setAttribute('id', `${data.id}`);
     cont.setAttribute('class', `card`);
+    //cont.setAttribute('draggable', `true`) draggable_list;
     cont.innerHTML = `
             <div class="card_header">
                 <h3 class="title">${data.title}</h3>

@@ -18,6 +18,7 @@ class Controller {
         this.view.bindListEvents(this.handleDelList, this.handleAddListItem, this.handleEditItem, this.handleDelListItem, this.model.data)
         // Drag & drop
         this.view.bindDragDropEvents(this.handleDragDrop);
+        //this.view.bindDragDropBoardEvents()
     }
 
     // Display

@@ -98,7 +98,7 @@
 .list_el_wrapper {
     position: relative;
     height: 50px;
-    padding: 10px 5px 10px 50px;
+    padding: 12px 5px 12px 40px;
     margin: 5px 0px 5px 0px;
     transition: 0.3s ease;
     border-radius: 6px;

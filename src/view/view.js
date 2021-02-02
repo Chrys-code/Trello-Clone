@@ -4,8 +4,7 @@ import { inputModal } from "./interfaceinstances/inputModal.js";
 import { editListItemModal } from "./interfaceinstances/editListItemModal.js";
 import { listInputModal } from "./interfaceinstances/listInputModal.js";
 import { boardInputModal } from "./interfaceinstances/boardInputModal.js";
-import listElDrag from "../utils/drag.js";
-
+import drag from "../utils/drag.js";
 export default class View {
     constructor() {
         this.wrapper = document.querySelector('.wrapper');
@@ -133,14 +132,13 @@ export default class View {
                 function getItem() {
                     let lists = data[data.findIndex(x => x.id == ids.boardId)].items;
                     let items = lists[lists.findIndex(x => x.id == ids.listId)].items;
-                    let item = items[items.findIndex(x => x.id == ids.itemId)]
-                    let itemDesc = item.desc;
-                    let itemTitle = item.name
+                    let item = items[items.findIndex(x => x.id == ids.itemId)];
+                    let itemDesc = item.desc ? item.desc : null;
+                    let itemTitle = item.name ? item.name : null;
                     return { title: itemTitle, desc: itemDesc }
                 }
                 // Send item details
                 editListItemModal(this.wrapper, getItem())
-
                 this.bindEditItemModalEvents(editHandler, removeItemHandler, ids)
             }
         })
@@ -180,12 +178,12 @@ export default class View {
         })
     }
 
-    // drag & drop
+    // drag & drop list item
     bindDragDropEvents = (handler) => {
         window.addEventListener('dragstart', (e) => {
-            listElDrag(this.selectorAll('.list'))
             const target = e.target;
             if (target.classList.contains('draggable_item')) {
+                drag(this.selectorAll('.list'))
                 target.classList.add('dragging')
             }
         })
@@ -194,7 +192,7 @@ export default class View {
             const parent = target.parentElement;
             const nextSibling = target.nextSibling
             if (target.classList.contains('draggable_item')) {
-                //define origin
+                //define origin (ids)
                 function calcOrigin() {
                     let numId = target.firstChild.id
                     let bId = Math.floor(numId / 1000) * 1000
@@ -202,7 +200,7 @@ export default class View {
                     let iId = Math.floor((numId - bId - lId))
                     return { boardId: bId, listId: bId + lId, itemId: bId + lId + iId }
                 }
-                //define destination from destination environment
+                //define destination from destination environment (ids)
                 function calcDestination() {
                     if (nextSibling) {
                         let numId = nextSibling.firstChild.id
@@ -226,4 +224,52 @@ export default class View {
             }
         })
     }
+
+    /*
+    // drag & drop list 
+    bindDragDropBoardEvents = (handler) => {
+        window.addEventListener('dragstart', (e) => {
+            // listElDrag(this.selectorAll('.board_body'))
+            const target = e.target;
+            if (target.classList.contains('draggable_list')) {
+                drag(this.selectorAll('.board_body'))
+                target.classList.add('dragging_list')
+            }
+        })
+        window.addEventListener('dragend', (e) => {
+            const target = e.target
+            const parent = target.parentElement;
+            const nextSibling = target.nextSibling
+            if (target.classList.contains('draggable_list')) {
+                //define origin (ids)
+                function calcOrigin() {
+                    let numId = target.firstChild.id
+                    let bId = Math.floor(numId / 1000) * 1000
+                    let lId = Math.floor((numId - bId) / 100) * 100
+                    return { boardId: bId, listId: bId + lId }
+                }
+                //define destination from destination environment (ids)
+                function calcDestination() {
+                    if (nextSibling) {
+                        let numId = nextSibling.firstChild.id
+                        let bId = Math.floor(numId / 1000) * 1000
+                        let lId = Math.floor((numId - bId) / 100) * 100
+                        return { boardId: bId, listId: bId + lId }
+                    }
+                    if (!nextSibling) {
+                        let numId = parent.parentElement.parentElement.id
+                        let bId = Math.floor(numId / 1000) * 1000
+                        //let iId = Math.floor(numId - bId - lId) + 1
+                        return { boardId: bId }
+                    }
+                    // if itemId: 0 => last item /only in the list
+
+                }
+                handler(calcOrigin(), calcDestination())
+                target.classList.remove('dragging_list')
+            }
+        })
+    }
+    */
+
 }

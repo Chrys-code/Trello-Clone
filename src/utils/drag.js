@@ -1,9 +1,17 @@
-const listElDrag = (containers) => {
+const drag = (containers) => {
     function closestCont() {
         containers.forEach(container => {
             container.addEventListener('dragover', (e) => {
                 e.preventDefault();
-                const draggable = document.querySelector('.dragging');
+                let draggable;
+                if (container.className === 'list') {
+                    draggable = document.querySelector('.dragging');
+                }
+                /*
+                if (container.className === 'board_body') {
+                    draggable = document.querySelector('.dragging_list');
+                }
+                */
                 if (getDragAfterElement(container, e.clientY) == null) {
                     container.appendChild(draggable);
                 } else {
@@ -14,7 +22,15 @@ const listElDrag = (containers) => {
     }
 
     function getDragAfterElement(container, y) {
-        const draggableElements = [...container.querySelectorAll('.draggable_item:not(.dragging)')];
+        let draggableElements = []
+        if (container.className === 'list') {
+            draggableElements = [...container.querySelectorAll('.draggable_item:not(.dragging)')];
+        }
+        /*
+        if (container.className === 'board_body') {
+            draggableElements = [...container.querySelectorAll('.draggable_list:not(.dragging)')];
+        }
+        */
         return draggableElements.reduce((closest, child) => {
             const box = child.getBoundingClientRect();
             const offset = y - box.top - box.height / 2;
@@ -29,20 +45,4 @@ const listElDrag = (containers) => {
         adjacentCont: closestCont(),
     }
 }
-export default listElDrag;
-
-
-/*
-function dragSelector() {
-    draggables.forEach((draggable) => {
-        draggable.addEventListener('dragstart', (e) => {
-            draggable.classList.add('dragging')
-        })
-        draggable.addEventListener('dragend', (e) => {
-            var id = draggable.parentElement.id.split("_")[1]
-            draggable.childNodes[1].id = id
-            draggable.classList.remove('dragging')
-        })
-    })
-}
-*/
+export default drag;
