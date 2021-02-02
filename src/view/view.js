@@ -47,8 +47,8 @@ export default class View {
             this.wrapper.removeChild(this.wrapper.firstChild)
         }
         this.createAddBoardBtn()
-        if (data && data.items) {
-            data.items.forEach(board => {
+        if (data) {
+            data.forEach(board => {
                 this.createBoard({ id: board.id, title: board.name })
                 board.items.forEach(list => {
                     this.createList({ parentId: board.id, id: list.id, title: list.name })
@@ -131,7 +131,7 @@ export default class View {
                 const ids = { boardId: target.parentElement.parentElement.parentElement.parentElement.parentElement.id, listId: target.parentElement.parentElement.parentElement.id, itemId: target.firstChild.id }
                 // Search out item description by Ids
                 function getItem() {
-                    let lists = data.items[data.items.findIndex(x => x.id == ids.boardId)].items;
+                    let lists = data[data.findIndex(x => x.id == ids.boardId)].items;
                     let items = lists[lists.findIndex(x => x.id == ids.listId)].items;
                     let item = items[items.findIndex(x => x.id == ids.itemId)]
                     let itemDesc = item.desc;

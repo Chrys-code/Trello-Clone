@@ -14,43 +14,43 @@ class Model {
 
     addBoard(title) {
         const newBoard = {
-            id: this.data.items.length > 0 ? parseInt(this.data.items[this.data.items.length - 1].id) + 1000 : 1000,
+            id: this.data.length > 0 ? parseInt(this.data[this.data.length - 1].id) + 1000 : 1000,
             name: title,
             items: [],
         }
-        this.data.items.push(newBoard)
+        this.data.push(newBoard)
         this
 
         this._commit(this.data)
     }
 
     delBoard(boardId) {
-        this.data.items = this.data.items.filter(x => x.id != boardId)
+        this.data = this.data.filter(x => x.id != boardId)
         this._commit(this.data)
     }
 
     addList(title, boardId) {
-        const list = this.data.items[this.data.items.findIndex(x => x.id == boardId)].items;
+        const list = this.data[this.data.findIndex(x => x.id == boardId)].items;
         if (list[list.length >= 9]) return
         const newItem = {
             id: list.length > 0 ? parseInt(list[list.length - 1].id) + 100 : parseInt(boardId) + 100,
             name: title,
             items: [],
         }
-        this.data.items[this.data.items.findIndex(x => x.id == boardId)].items.push(newItem)
+        this.data[this.data.findIndex(x => x.id == boardId)].items.push(newItem)
         this._commit(this.data)
 
     }
 
     delList(boardId, listId) {
-        const board = this.data.items[this.data.items.findIndex(x => x.id == boardId)];
+        const board = this.data[this.data.findIndex(x => x.id == boardId)];
         const reducedList = board.items.filter(x => x.id != listId)
-        this.data.items[this.data.items.findIndex(x => x.id == boardId)].items = reducedList
+        this.data[this.data.findIndex(x => x.id == boardId)].items = reducedList
         this._commit(this.data)
     }
 
     addListItem(title, desc, boardId, listId) {
-        const board = this.data.items[this.data.items.findIndex(x => x.id == boardId)];
+        const board = this.data[this.data.findIndex(x => x.id == boardId)];
         const list = board.items[board.items.findIndex(x => x.id == listId)];
         // if list item id hits 99, re-calculate list item ID-s by index
         /*
@@ -77,7 +77,7 @@ class Model {
 
     delListItem(boardId, listId, itemId) {
 
-        const board = this.data.items[this.data.items.findIndex(x => x.id == boardId)];
+        const board = this.data[this.data.findIndex(x => x.id == boardId)];
         const list = board.items[board.items.findIndex(x => x.id == listId)];
         const reducedList = list.items.filter(x => x.id != itemId)
         list.items = reducedList
@@ -86,7 +86,7 @@ class Model {
 
     editListItem(boardId, listId, itemId, desc) {
         //find item
-        const board = this.data.items[this.data.items.findIndex(x => x.id == boardId)];
+        const board = this.data[this.data.findIndex(x => x.id == boardId)];
         const list = board.items[board.items.findIndex(x => x.id == listId)];
         const item = list.items.filter(x => x.id == itemId)
         // replace descripntion
@@ -98,7 +98,7 @@ class Model {
 
     dragdrop(origin, destination) {
         //origin => delete 
-        const board = this.data.items[this.data.items.findIndex(x => x.id == origin.boardId)];
+        const board = this.data[this.data.findIndex(x => x.id == origin.boardId)];
         const list = board.items[board.items.findIndex(x => x.id == origin.listId)]
         //save item for instert
         const item = list.items[list.items.findIndex(x => x.id == origin.itemId)]
@@ -107,7 +107,7 @@ class Model {
         list.items = reducedItemList
 
         // destination => insert before, update Ids?
-        const destBoard = this.data.items[this.data.items.findIndex(x => x.id == destination.boardId)];
+        const destBoard = this.data[this.data.findIndex(x => x.id == destination.boardId)];
         const destList = destBoard.items[destBoard.items.findIndex(x => x.id == destination.listId)];
         // if item inserted between list elements, copy next sinbing ID, add +1 to all IDs that is greater or equal,
         // the insert item with the next sibling's id
