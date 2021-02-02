@@ -47,15 +47,17 @@ export default class View {
             this.wrapper.removeChild(this.wrapper.firstChild)
         }
         this.createAddBoardBtn()
-        data.items.forEach(board => {
-            this.createBoard({ id: board.id, title: board.name })
-            board.items.forEach(list => {
-                this.createList({ parentId: board.id, id: list.id, title: list.name })
-                list.items.forEach(listEl => {
-                    this.createListEl({ parentId: list.id, id: listEl.id, title: listEl.name, desc: listEl.desc })
+        if (data && data.items) {
+            data.items.forEach(board => {
+                this.createBoard({ id: board.id, title: board.name })
+                board.items.forEach(list => {
+                    this.createList({ parentId: board.id, id: list.id, title: list.name })
+                    list.items.forEach(listEl => {
+                        this.createListEl({ parentId: list.id, id: listEl.id, title: listEl.name, desc: listEl.desc })
+                    })
                 })
             })
-        })
+        }
     }
 
     //Event bindings
